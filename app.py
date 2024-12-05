@@ -26,4 +26,12 @@ if uploaded_file is not None:
     
     # Display the extracted text
     st.subheader("Extracted Text")
-    st.text(text)
+    st.text_area("Text Content", text, height=300)
+    
+    # Add a copy button
+    st.download_button(
+        label="Copy Text",
+        data=text,
+        file_name="extracted_text.txt",
+        mime="text/plain",
+    )
