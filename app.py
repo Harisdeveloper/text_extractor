@@ -1,7 +1,6 @@
 import streamlit as st
 from io import BytesIO
 from pptx import Presentation
-import pyperclip
 
 # Function to extract text from PPTX and remove spaces left by images
 def extract_text_from_pptx(file):
@@ -97,10 +96,24 @@ if uploaded_file is not None:
     )
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # Add a button to copy the text to clipboard
-    if st.button('Copy Text to Clipboard'):
-        pyperclip.copy(text)  # Copy the text to clipboard
-        st.success("Text copied to clipboard!")
+    # Add the "Copy to Clipboard" button using HTML/JavaScript
+    st.markdown(f"""
+        <div style="text-align:center; margin-top:20px;">
+            <button onclick="navigator.clipboard.writeText('{text.replace('\'', '\\\'').replace('\"', '\\\"')}')">Copy Text to Clipboard</button>
+        </div>
+        <script>
+            // Custom script to copy the extracted text to clipboard
+            document.querySelector('button').addEventListener('click', function() {{
+                navigator.clipboard.writeText("{text.replace('\'', '\\\'').replace('\"', '\\\"')}")
+                    .then(() => {{
+                        alert('Text copied to clipboard!');
+                    }})
+                    .catch(err => {{
+                        alert('Failed to copy text!');
+                    }});
+            }});
+        </script>
+    """, unsafe_allow_html=True)
 
     # Show message for successful extraction
     st.markdown("""
