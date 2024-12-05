@@ -2,16 +2,26 @@ import streamlit as st
 from io import BytesIO
 from pptx import Presentation
 
-# Function to extract text from PPTX
+# Function to extract text from PPTX and remove spaces left by images
 def extract_text_from_pptx(file):
-    """Extract text from a PowerPoint file."""
+    """Extract text from a PowerPoint file and remove empty spaces where images are placed."""
     presentation = Presentation(file)
     text = []
+    
     for slide in presentation.slides:
+        slide_text = []
         for shape in slide.shapes:
             if shape.has_text_frame:
-                # Strip any extra spaces between text and add to list
-                text.append(shape.text.strip())
+                # Strip any extra spaces and add to slide_text
+                slide_text.append(shape.text.strip())
+            # Skip image shapes (no text content)
+            elif shape.shape_type == 13:  # Type 13 is for pictures (images)
+                continue
+        
+        # If there is any text in the slide, add it to the main text, else ignore the slide
+        if slide_text:
+            text.append("\n".join(slide_text))
+    
     return "\n".join(text)
 
 # Set page layout
