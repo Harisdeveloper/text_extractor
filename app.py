@@ -30,7 +30,7 @@ if uploaded_file is not None:
     
     # Add a copy button
     st.download_button(
-        label="Copy Text",
+        label="Download Text",
         data=text,
         file_name="extracted_text.txt",
         mime="text/plain",
