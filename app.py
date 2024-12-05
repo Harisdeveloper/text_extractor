@@ -1,6 +1,7 @@
 import streamlit as st
 from io import BytesIO
 from pptx import Presentation
+import pyperclip
 
 # Function to extract text from PPTX and remove spaces left by images
 def extract_text_from_pptx(file):
@@ -60,16 +61,6 @@ landing_page_style = """
             margin-top: 40px;
             font-family: 'Arial', sans-serif;
         }
-        #copy-button {
-            display: block;
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
     </style>
 """
 
@@ -93,7 +84,7 @@ if uploaded_file is not None:
     
     # Display the extracted text
     st.subheader("Extracted Text")
-    st.text_area("Text Content", text, height=300, key="extracted_text", disabled=True)
+    text_area = st.text_area("Text Content", text, height=300, key="extracted_text", disabled=True)
     
     # Display the download button in the middle of the screen
     st.markdown('<div class="button-container">', unsafe_allow_html=True)
@@ -106,18 +97,10 @@ if uploaded_file is not None:
     )
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # Add the Copy Text button
-    st.markdown("""
-        <button id="copy-button" onclick="copyText()">Copy Text</button>
-        <script>
-        function copyText() {
-            var textArea = document.querySelector('textarea');
-            textArea.select();
-            textArea.setSelectionRange(0, 99999); // For mobile devices
-            document.execCommand('copy');
-        }
-        </script>
-    """, unsafe_allow_html=True)
+    # Add a button to copy the text to clipboard
+    if st.button('Copy Text to Clipboard'):
+        pyperclip.copy(text)  # Copy the text to clipboard
+        st.success("Text copied to clipboard!")
 
     # Show message for successful extraction
     st.markdown("""
