@@ -56,10 +56,9 @@ landing_page_style = """
 # Apply custom styles to the landing page
 st.markdown(landing_page_style, unsafe_allow_html=True)
 
-# Title and Developer Name
+# Title and Description
 st.markdown('<div class="title">PowerPoint Text Extractor</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">Developed by Muhammad Haris</div>', unsafe_allow_html=True)
-st.markdown('<div class="description">Upload a PowerPoint (.pptx) file to extract its text content.</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">Upload a PowerPoint (.pptx) file to extract its text content.</div>', unsafe_allow_html=True)
 
 # File uploader widget
 uploaded_file = st.file_uploader("Choose a PPT file", type=["pptx"])
