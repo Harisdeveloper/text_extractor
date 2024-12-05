@@ -60,10 +60,6 @@ landing_page_style = """
             margin-top: 40px;
             font-family: 'Arial', sans-serif;
         }
-        .footer-links {
-            display: inline;
-            margin-right: 20px;
-        }
         .footer a {
             color: #333;
             text-decoration: none;
@@ -71,10 +67,6 @@ landing_page_style = """
         }
         .footer a:hover {
             color: #4CAF50;
-        }
-        .footer-name {
-            font-size: 16px;
-            color: #444;
         }
     </style>
 """
@@ -121,9 +113,9 @@ if uploaded_file is not None:
         </div>
     """, unsafe_allow_html=True)
 
-# Footer with developer information and contact links in inline format
+# Footer with developer information and contact links
 st.markdown('<div class="footer">', unsafe_allow_html=True)
-st.markdown('<span class="footer-name">© 2024 Muhammad Haris. Developer | </span>', unsafe_allow_html=True)
-st.markdown('<span class="footer-links"><a href="mailto:imharis.dev@gmail.com">📧 Email</a></span>', unsafe_allow_html=True)
-st.markdown('<span class="footer-links"><a href="https://wa.me/03188466565">📱 WhatsApp</a></span>', unsafe_allow_html=True)
+st.markdown('<span>Developed by: Muhammad Haris | </span>', unsafe_allow_html=True)
+st.markdown('<a href="mailto:imharis.dev@gmail.com">Email me</a> | ', unsafe_allow_html=True)
+st.markdown('<a href="https://wa.me/03188466565">WhatsApp me</a>', unsafe_allow_html=True)
 st.markdown('</div>', unsafe_allow_html=True)
