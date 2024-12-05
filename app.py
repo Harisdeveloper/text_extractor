@@ -60,6 +60,16 @@ landing_page_style = """
             margin-top: 40px;
             font-family: 'Arial', sans-serif;
         }
+        #copy-button {
+            display: block;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
     </style>
 """
 
@@ -95,6 +105,19 @@ if uploaded_file is not None:
         use_container_width=True
     )
     st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Display the Copy button and add JavaScript to copy text
+    st.markdown("""
+        <button id="copy-button" onclick="copyText()">Copy Text</button>
+        <script>
+        function copyText() {
+            const text = document.querySelector('#extracted_text');
+            text.select();
+            text.setSelectionRange(0, 99999); // For mobile devices
+            document.execCommand('copy');
+        }
+        </script>
+    """, unsafe_allow_html=True)
 
     # Show message for successful extraction
     st.markdown("""
