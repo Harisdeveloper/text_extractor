@@ -1,6 +1,8 @@
 import streamlit as st
 from io import BytesIO
 from pptx import Presentation
+from sumy.parsers.plaintext import PlaintextParser
+from sumy.summarizers.lsa import LsaSummarizer
 
 # Function to extract text from PPTX and remove spaces left by images
 def extract_text_from_pptx(file):
@@ -23,6 +25,15 @@ def extract_text_from_pptx(file):
             text.append("\n".join(slide_text))
     
     return "\n".join(text)
+
+# Function to summarize the extracted text
+def summarize_text(text, num_sentences=3):
+    """Summarize the text using LSA (Latent Semantic Analysis) summarizer."""
+    parser = PlaintextParser.from_string(text, PlaintextParser.from_string(text, PlaintextParser.from_string(text)))
+    summarizer = LsaSummarizer()
+    summary = summarizer(parser.document, num_sentences)
+    
+    return "\n".join([str(sentence) for sentence in summary])
 
 # Set page layout
 st.set_page_config(page_title="PPT Text Extractor", layout="centered")
@@ -68,7 +79,7 @@ st.markdown(landing_page_style, unsafe_allow_html=True)
 
 # Title and Description
 st.markdown('<div class="title">PowerPoint Text Extractor</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">Upload a PowerPoint (.pptx) file to extract its text content.</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">Upload a PowerPoint (.pptx) file to extract its text content and summarize it.</div>', unsafe_allow_html=True)
 
 # File uploader widget
 uploaded_file = st.file_uploader("Choose a PPT file", type=["pptx"])
@@ -81,9 +92,14 @@ if uploaded_file is not None:
     # Extract text from the uploaded PPT
     text = extract_text_from_pptx(BytesIO(file_bytes))
     
-    # Display the extracted text
-    st.subheader("Extracted Text")
-    text_area = st.text_area("Text Content", text, height=300, key="extracted_text", disabled=True)
+    # Display the extracted text (removed in this version, you only get the summary now)
+    st.subheader("Summary of Extracted Text")
+
+    # Generate the summary
+    summary = summarize_text(text)
+    
+    # Display the summary
+    st.text_area("Text Summary", summary, height=300, key="summary", disabled=True)
     
     # Display the download button in the middle of the screen
     st.markdown('<div class="button-container">', unsafe_allow_html=True)
@@ -96,29 +112,10 @@ if uploaded_file is not None:
     )
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # Add the "Copy to Clipboard" button using HTML/JavaScript
-    st.markdown(f"""
-        <div style="text-align:center; margin-top:20px;">
-            <button onclick="navigator.clipboard.writeText('{text.replace('\'', '\\\'').replace('\"', '\\\"')}')">Copy Text to Clipboard</button>
-        </div>
-        <script>
-            // Custom script to copy the extracted text to clipboard
-            document.querySelector('button').addEventListener('click', function() {{
-                navigator.clipboard.writeText("{text.replace('\'', '\\\'').replace('\"', '\\\"')}")
-                    .then(() => {{
-                        alert('Text copied to clipboard!');
-                    }})
-                    .catch(err => {{
-                        alert('Failed to copy text!');
-                    }});
-            }});
-        </script>
-    """, unsafe_allow_html=True)
-
-    # Show message for successful extraction
+    # Show message for successful extraction and summarization
     st.markdown("""
         <div style="text-align:center; margin-top:20px;">
-            <p style="color: #4CAF50; font-size: 18px;">Text successfully extracted!</p>
+            <p style="color: #4CAF50; font-size: 18px;">Text successfully extracted and summarized!</p>
         </div>
     """, unsafe_allow_html=True)
 
