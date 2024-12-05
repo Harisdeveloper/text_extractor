@@ -115,7 +115,5 @@ if uploaded_file is not None:
 
 # Footer with name, email, and WhatsApp in one line
 st.markdown('<div class="footer">', unsafe_allow_html=True)
-st.markdown('<span>Developed by: Muhammad Haris | </span>', unsafe_allow_html=True)
-st.markdown('<a href="mailto:imharis.dev@gmail.com">Email me</a> | ', unsafe_allow_html=True)
-st.markdown('<a href="https://wa.me/03188466565">WhatsApp me</a>', unsafe_allow_html=True)
+st.markdown('<span>Developed by: Muhammad Haris | Email me: imharis.dev@gmail.com | Whatsapp me: 0318-8466565 </span>', unsafe_allow_html=True)
 st.markdown('</div>', unsafe_allow_html=True)
