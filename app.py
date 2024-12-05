@@ -60,6 +60,23 @@ landing_page_style = """
             margin-top: 40px;
             font-family: 'Arial', sans-serif;
         }
+        .footer-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .footer a {
+            margin: 0 15px;
+            color: #333;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .footer a:hover {
+            color: #4CAF50;
+        }
+        .email-icon, .whatsapp-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
     </style>
 """
 
@@ -104,6 +121,14 @@ if uploaded_file is not None:
             <p style="color: #4CAF50; font-size: 18px;">Text successfully extracted!</p>
         </div>
     """, unsafe_allow_html=True)
+
+# Footer with developer information and contact links
+st.markdown('<div class="footer-links">', unsafe_allow_html=True)
+# Email link
+st.markdown('<a href="mailto:imharis.dev@gmail.com"><span class="email-icon">📧</span>Email Me</a>', unsafe_allow_html=True)
+# WhatsApp link
+st.markdown('<a href="https://wa.me/03188466565"><span class="whatsapp-icon">📱</span>WhatsApp Me</a>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # Footer with developer information
 st.markdown('<div class="footer">© 2024 Muhammad Haris. All rights reserved.</div>', unsafe_allow_html=True)
