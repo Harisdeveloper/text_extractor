@@ -10,24 +10,59 @@ def extract_text_from_pptx(file):
     for slide in presentation.slides:
         for shape in slide.shapes:
             if shape.has_text_frame:
-                text.append(shape.text)
+                # Strip any extra spaces between text and add to list
+                text.append(shape.text.strip())
     return "\n".join(text)
 
 # Set page layout
 st.set_page_config(page_title="PPT Text Extractor", layout="centered")
 
-# Title and introduction
-st.markdown("""
-    <div style="text-align:center;">
-        <h1 style="color:#4CAF50;">PowerPoint Text Extractor</h1>
-        <p style="font-size:20px; color:#777;">Developed by Muhammad Haris</p>
-    </div>
-    <br>
-    <p style="text-align:center;">Upload a PowerPoint (.pptx) file to extract its text content.</p>
-""", unsafe_allow_html=True)
+# Style and layout for the landing page
+landing_page_style = """
+    <style>
+        .title {
+            text-align: center;
+            color: #2F8F4F;
+            font-size: 36px;
+            font-family: 'Arial', sans-serif;
+        }
+        .subtitle {
+            text-align: center;
+            color: #777;
+            font-size: 18px;
+            font-family: 'Arial', sans-serif;
+        }
+        .description {
+            font-size: 18px;
+            color: #444;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            margin-top: 40px;
+            font-family: 'Arial', sans-serif;
+        }
+    </style>
+"""
+
+# Apply custom styles to the landing page
+st.markdown(landing_page_style, unsafe_allow_html=True)
+
+# Title and Developer Name
+st.markdown('<div class="title">PowerPoint Text Extractor</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">Developed by Muhammad Haris</div>', unsafe_allow_html=True)
+st.markdown('<div class="description">Upload a PowerPoint (.pptx) file to extract its text content.</div>', unsafe_allow_html=True)
 
 # File uploader widget
-uploaded_file = st.file_uploader("Choose a PPT file", type=["pptx"], label_visibility="collapsed")
+uploaded_file = st.file_uploader("Choose a PPT file", type=["pptx"])
 
 # If a file is uploaded, process it
 if uploaded_file is not None:
@@ -40,8 +75,9 @@ if uploaded_file is not None:
     # Display the extracted text
     st.subheader("Extracted Text")
     st.text_area("Text Content", text, height=300, key="extracted_text", disabled=True)
-
-    # Add a download button
+    
+    # Display the download button in the middle of the screen
+    st.markdown('<div class="button-container">', unsafe_allow_html=True)
     st.download_button(
         label="Download Extracted Text",
         data=text,
@@ -49,17 +85,14 @@ if uploaded_file is not None:
         mime="text/plain",
         use_container_width=True
     )
+    st.markdown('</div>', unsafe_allow_html=True)
 
     # Show message for successful extraction
     st.markdown("""
         <div style="text-align:center; margin-top:20px;">
-            <p style="color: #4CAF50;">Text successfully extracted!</p>
+            <p style="color: #4CAF50; font-size: 18px;">Text successfully extracted!</p>
         </div>
     """, unsafe_allow_html=True)
-    
+
 # Footer with developer information
-st.markdown("""
-    <div style="text-align:center; font-size:12px; color:#888; margin-top:40px;">
-        <p>&copy; 2024 Muhammad Haris. All rights reserved.</p>
-    </div>
-""", unsafe_allow_html=True)
+st.markdown('<div class="footer">© 2024 Muhammad Haris. All rights reserved.</div>', unsafe_allow_html=True)
