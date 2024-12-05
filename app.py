@@ -113,7 +113,7 @@ if uploaded_file is not None:
         </div>
     """, unsafe_allow_html=True)
 
-# Footer with developer information and contact links
+# Footer with name, email, and WhatsApp in one line
 st.markdown('<div class="footer">', unsafe_allow_html=True)
 st.markdown('<span>Developed by: Muhammad Haris | </span>', unsafe_allow_html=True)
 st.markdown('<a href="mailto:imharis.dev@gmail.com">Email me</a> | ', unsafe_allow_html=True)
